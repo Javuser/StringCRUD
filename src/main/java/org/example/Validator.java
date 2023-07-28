@@ -37,8 +37,18 @@ public class Validator {
         System.out.println("validateUpdate");
     }
 
+    //DELETE ID
     private void validateDelete(String s){
-
+        String[] str = s.split(" ");
+        if(!str[0].equals("DELETE")){
+            throw new IllegalArgumentException("Illegal command");
+        }
+        if(str.length < 2){
+            throw new IllegalArgumentException("Illegal command");
+        }
+        if(isNotInt(str[1])){
+            throw new IllegalArgumentException("Illegal command");
+        }
         System.out.println("validateDelete");
     }
     private boolean isNotInt(String s) {
@@ -49,4 +59,5 @@ public class Validator {
         }
         return false;
     }
+
 }
