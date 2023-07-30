@@ -1,34 +1,25 @@
 package org.example;
 
-import java.util.HashMap;
 
 public class Parser {
-    private final Validator validator;
-    //private final StringDB stringDB;
-    Command command = new Command();
 
-    HashMap<Integer, String> hashMap = new HashMap<>();
-    //int id = 0;
+    private final Validator validator;
 
     public Parser(Validator validator) {
         this.validator = validator;
-       // this.stringDB = stringDB;
     }
 
-
     public Command parse(String s){
+
         validator.validate(s);
         String[] str = s.split(" ");
 
-        String t;
         switch (str[0]){
             case "GET" -> {
                 return parseGet(s);
             }
             case "CREATE" -> {
-       //         t = String.valueOf(parseCreate(s));
-               // System.out.println("String saved with id=" + stringDB.add(s));
-                return parseCreate(s);
+               return parseCreate(s);
             }
 
             case "UPDATE" -> {
@@ -43,24 +34,27 @@ public class Parser {
     }
 
     private Command parseGet(String s){
-        //System.out.println(stringDB.get(s));
         return null;
     }
 
     private Command parseCreate(String s){
-        validator.validate(s);
-
-     //   hashMap.put(id, s);
-       // System.out.println("String saved with id=" + stringDB.add(s));
-
-       // return command.getCommandType();//
+        return null;
     }
-
+    // update 1 rrr ttt yyy
+    // commandType - update
+    // id - 1
+    // value - rrr ttt yyy
     private Command parseUpdate(String s){
-       // return command.getCommandType();
+        String[] str = s.split(" ");
+        String toReplace = String.format("%s %s ", str[0], str[1]);
+        CommandType commandType = CommandType.UPDATE;
+        Integer id = Integer.parseInt(str[1]);
+        String value = s.replace(toReplace, "");
+
+        return new Command(commandType, id, value);
     }
 
     private Command parseDelete(String s){
-       // return command.getCommandType();
+       return null;
     }
 }

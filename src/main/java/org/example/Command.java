@@ -5,14 +5,11 @@ public class Command {
     private Integer id;
     private String value;
 
-//    public CommandType getCommandType() {
-//        return commandType;
-//    }
-//
-//    public void setCommandType(CommandType commandType) {
-//        this.commandType = commandType;
-//    }
-
+    public Command(CommandType commandType, Integer id, String value) {
+        this.commandType = commandType;
+        this.id = id;
+        this.value = value;
+    }
 
     public CommandType getCommandType() {
         return commandType;
