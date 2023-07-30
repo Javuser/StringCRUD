@@ -4,14 +4,15 @@ import java.util.HashMap;
 
 public class Parser {
     private final Validator validator;
-    private final StringDB stringDB;
+    //private final StringDB stringDB;
+    Command command = new Command();
 
     HashMap<Integer, String> hashMap = new HashMap<>();
     //int id = 0;
 
-    public Parser(Validator validator, StringDB stringDB) {
+    public Parser(Validator validator) {
         this.validator = validator;
-        this.stringDB = stringDB;
+       // this.stringDB = stringDB;
     }
 
 
@@ -47,19 +48,19 @@ public class Parser {
     }
 
     private Command parseCreate(String s){
-
+        validator.validate(s);
 
      //   hashMap.put(id, s);
-        System.out.println("String saved with id=" + stringDB.add(s));
+       // System.out.println("String saved with id=" + stringDB.add(s));
 
-        return null;//
+       // return command.getCommandType();//
     }
 
     private Command parseUpdate(String s){
-        return null;
+       // return command.getCommandType();
     }
 
     private Command parseDelete(String s){
-        return null;
+       // return command.getCommandType();
     }
 }

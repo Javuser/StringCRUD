@@ -13,9 +13,9 @@ public class App
        String s;
        Scanner sc = new Scanner(System.in);
         Validator validator = new Validator();
-        StringDB stringDB = new StringDB();
+       // StringDB stringDB = new StringDB();
 
-        Parser parser = new Parser(validator, stringDB);
+        Parser parser = new Parser(validator);
             while (true) {
                 try {
                     s = sc.nextLine();

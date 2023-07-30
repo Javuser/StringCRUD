@@ -14,11 +14,34 @@ public class Validator {
         }
     }
     private void validateGet(String s){
+        String[] str = s.split(" ");
+        if(str.length == 1){
+            if(!str[0].equals("GET")){
+                throw new IllegalArgumentException("Illegal command");
+            }
+        }else{
+            if(!str[0].equals("GET")){
+                throw new IllegalArgumentException("Illegal command");
+            }
+            if(isNotInt(str[1])){
+                throw new IllegalArgumentException("Illegal command");
+            }
+        }
+
         System.out.println("validateGet");
     }
 
     private void validateCreate(String s){
-
+        String[] str = s.split(" ");
+        if(!str[0].equals("CREATE")){
+            throw new IllegalArgumentException("Illegal command");
+        }
+        if(str.length < 2){
+            throw new IllegalArgumentException("Illegal command");
+        }
+        if(!isNotInt(s)){
+            throw new IllegalArgumentException("Illegal command");
+        }
         System.out.println("validateCreate");
     }
 
