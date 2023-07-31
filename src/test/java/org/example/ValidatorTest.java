@@ -24,4 +24,50 @@ public class ValidatorTest {
         assertEquals("Illegal command", ex.getMessage());
     }
 
+    @Test
+    void validateCreate(){
+        String command = "CREATE srtrt trt";
+        assertDoesNotThrow(() -> validator.validate(command));
+    }
+
+    @Test
+    void validateCreateShouldThrowException(){
+        String command = "CREATE";
+        Exception ex = assertThrows(
+                IllegalArgumentException.class, () -> validator.validate(command)
+        );
+        assertEquals("Illegal command", ex.getMessage());
+    }
+
+    @Test
+    void validateDelete(){
+        String command = "DELETE 1";
+        assertDoesNotThrow(() -> validator.validate(command));
+    }
+
+    @Test
+    void validateDeleteShouldThrowException(){
+        String command = "DELETE rsg vrsbv rsb";
+        Exception ex = assertThrows(
+                IllegalArgumentException.class, () -> validator.validate(command)
+        );
+        assertEquals("Illegal command", ex.getMessage());
+    }
+
+    @Test
+    void validateGet(){
+        String command1 = "GET";
+        assertDoesNotThrow(() -> validator.validate(command1));
+        String command2 = "GET 1";
+        assertDoesNotThrow(() -> validator.validate(command2));
+    }
+
+    @Test
+    void validateGetShouldThrowException(){
+        String command = "GET sg rgd";
+        Exception ex = assertThrows(
+                IllegalArgumentException.class, () -> validator.validate(command)
+        );
+        assertEquals("Illegal command", ex.getMessage());
+    }
 }
