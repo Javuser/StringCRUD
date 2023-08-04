@@ -9,6 +9,7 @@ public class Parser {
         this.validator = validator;
     }
 
+
     public Command parse(String s){
 
         validator.validate(s);

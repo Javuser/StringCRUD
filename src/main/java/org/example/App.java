@@ -12,20 +12,20 @@ public class App
     {
        String s;
        Scanner sc = new Scanner(System.in);
-        Validator validator = new Validator();
-       // StringDB stringDB = new StringDB();
+       Validator validator = new Validator();
 
-        Parser parser = new Parser(validator);
+       StringDB stringDB = new StringDB();
+       Service service = new Service(stringDB);
+
+       Parser parser = new Parser(validator);
             while (true) {
                 try {
                     s = sc.nextLine();
                     if (s.equals("QUIT")) {
                         break;
                     }
-                    // System.out.println(s);
-
-                    //validator.validate(s);
                     Command command = parser.parse(s);
+                    //service.execute(stringDB);
                     System.out.println(command);
                 }catch (Exception e){
                     System.out.println(e.getMessage());

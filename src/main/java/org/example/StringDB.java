@@ -7,6 +7,7 @@ public class StringDB {
     private int id = 0;
 
 
+
     public int add(String s){
         hashMap.put(id, s);
         return id++;
@@ -18,6 +19,7 @@ public class StringDB {
         }
         throw new IllegalArgumentException("No string with id= " + id);
     }
+
     public HashMap<Integer, String> getAll(){
         if(hashMap.size() == 0){
             throw new IllegalArgumentException("Empty");
@@ -26,12 +28,14 @@ public class StringDB {
     }
 
     public void update(Integer id, String s){
+        hashMap.replace(id, s);
         if(hashMap.replace(id, s) == null){
             throw new IllegalArgumentException("No string with id=" + id);
         }
     }
 
-    public void delete(Integer id, String s){
+    public void delete(Integer id){
+        hashMap.remove(id);
         if(hashMap.remove(id) == null){
             throw new IllegalArgumentException("No string with id=" + id);
         }
