@@ -4,13 +4,18 @@ import java.util.HashMap;
 
 public class StringDB {
     private final HashMap<Integer, String> hashMap = new HashMap<>();
-    private int id = 0;
+    private int id2 = 0;
 
 
-
+    public int incrementId(){
+        return id2++;
+    }
+    public int stringId(){
+        return id2;
+    }
     public int add(String s){
-        hashMap.put(id, s);
-        return id++;
+        hashMap.put(stringId(), s);
+        return incrementId();
     }
 
     public String get(int id){
@@ -36,8 +41,8 @@ public class StringDB {
 
     public void delete(Integer id){
         hashMap.remove(id);
-        if(hashMap.remove(id) == null){
-            throw new IllegalArgumentException("No string with id=" + id);
-        }
+//        if(hashMap.remove(id) == null){
+//            throw new IllegalArgumentException("No string with id=" + id);
+//        }
     }
 }

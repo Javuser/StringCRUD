@@ -52,7 +52,7 @@ public class Parser {
         String toReplace = String.format("%s ", str[0]);
         CommandType commandType = CommandType.CREATE;
         String value = s.replace(toReplace, "");
-        return new Command(commandType, null, value);
+        return new Command(commandType, value);
     }
     // update 1 rrr ttt yyy
     // commandType - update
@@ -72,7 +72,6 @@ public class Parser {
         String[] str = s.split(" ");
         CommandType commandType = CommandType.DELETE;
         Integer id = Integer.parseInt(str[1]);
-        String value = null;
-       return new Command(commandType, id, value);
+        return new Command(commandType, id);
     }
 }

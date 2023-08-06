@@ -10,6 +10,21 @@ public class Command {
         this.id = id;
         this.value = value;
     }
+    public Command(CommandType commandType, String value) {
+        this.commandType = commandType;
+        this.id = null;
+        this.value = value;
+    }
+    public Command(CommandType commandType, Integer id) {
+        this.commandType = commandType;
+        this.id = id;
+        this.value = null;
+    }
+    public Command(CommandType commandType) {
+        this.commandType = commandType;
+        this.id = null;
+        this.value = null;
+    }
 
     public CommandType getCommandType() {
         return commandType;

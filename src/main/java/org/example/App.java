@@ -25,7 +25,7 @@ public class App
                         break;
                     }
                     Command command = parser.parse(s);
-                    //service.execute(stringDB);
+                    service.execute(command);
                     System.out.println(command);
                 }catch (Exception e){
                     System.out.println(e.getMessage());
