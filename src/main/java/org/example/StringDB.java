@@ -1,48 +1,47 @@
 package org.example;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class StringDB {
-    private final HashMap<Integer, String> hashMap = new HashMap<>();
-    private int id2 = 0;
+    private final Map<Integer, String> hashMap;
+    private AtomicInteger id;
 
+    public StringDB(Map<Integer, String> hashMap) {
+        this.hashMap = new HashMap<>(hashMap);
+        //todo вычислить айди
 
-    public int incrementId(){
-        return id2++;
-    }
-    public int stringId(){
-        return id2;
-    }
-    public int add(String s){
-        hashMap.put(stringId(), s);
-        return incrementId();
+//        Integer maxId = hashMap.keySet()
+        Integer maxId = hashMap.keySet().stream().max(Integer::compareTo).orElse(0);
+        id = new AtomicInteger(maxId);
     }
 
-    public String get(int id){
-        if(hashMap.containsKey(id)){
-            return hashMap.get(id);
-        }
-        throw new IllegalArgumentException("No string with id= " + id);
+
+    public StringDB() {
+        this.hashMap = new HashMap<>();
+    }
+
+    public Integer add(String s){
+        id.incrementAndGet();
+        hashMap.put(id.get(), s);
+        return id.get();
+    }
+
+    public String get(Integer id){
+        return hashMap.get(id);
     }
 
     public HashMap<Integer, String> getAll(){
-        if(hashMap.size() == 0){
-            throw new IllegalArgumentException("Empty");
-        }
-        return hashMap;
+        return new HashMap<>(hashMap);
     }
 
     public void update(Integer id, String s){
         hashMap.replace(id, s);
-        if(hashMap.replace(id, s) == null){
-            throw new IllegalArgumentException("No string with id=" + id);
-        }
     }
 
     public void delete(Integer id){
         hashMap.remove(id);
-//        if(hashMap.remove(id) == null){
-//            throw new IllegalArgumentException("No string with id=" + id);
-//        }
     }
 }

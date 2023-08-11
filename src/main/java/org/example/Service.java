@@ -1,6 +1,7 @@
 package org.example;
 
 import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Service {
 
@@ -16,12 +17,13 @@ public class Service {
             case CREATE -> add(command);
             case UPDATE -> update(command);
             case DELETE -> delete(command);
+            case GET_ALL -> getAll();
         }
 
     }
 
-    private HashMap<Integer, String> getHashMap(){
-        return getHashMap();
+    public HashMap<Integer, String> getHashMap(){
+        return stringDB.getAll();
     }
     private void get(Command command){
         String s = stringDB.get(command.getId());
@@ -39,5 +41,8 @@ public class Service {
     private void delete(Command command){
         stringDB.delete(command.getId());
         System.out.println("deleted from hashmap with id = " + command.getId());
+    }
+    private void getAll(){
+        getHashMap().forEach((key, value) -> System.out.println(String.format("%s: %s", key, value)));
     }
 }

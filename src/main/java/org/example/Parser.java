@@ -38,12 +38,17 @@ public class Parser {
     //commandType - GET
     //id - 4
     private Command parseGet(String s){
-        String[] str = s.split(" ");
-        CommandType commandType = CommandType.GET;
-        Integer id = Integer.parseInt(str[1]);
-        String value = null;
 
-        return new Command(commandType, id, value);
+        String[] str = s.split(" ");
+        if(str.length == 1){
+            return new Command(CommandType.GET_ALL);
+        }else {
+            CommandType commandType = CommandType.GET;
+            Integer id = Integer.parseInt(str[1]);
+            String value = null;
+
+            return new Command(commandType, id, value);
+        }
     }
 
     //CREATE rrr ttt yy
