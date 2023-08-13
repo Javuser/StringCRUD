@@ -11,47 +11,69 @@ public class StringDBTest {
 
     @Test
     void testCreate(){
+        //given
+        Person person = new Person();
+        person.setName("Nurbakyt");
+        person.setAge(22);
         StringDB stringDB = new StringDB(new HashMap<>());
-        stringDB.add("hello");
-        HashMap<Integer, String> hashMap = stringDB.getAll();
+
+        //when
+        stringDB.add(person);
+
+        //then
+        HashMap<Integer, Person> hashMap = stringDB.getAll();
 
         assertEquals(1, hashMap.size());
-        assertEquals("hello", hashMap.get(1));
+        assertEquals(person.getAge(), hashMap.get(1).getAge());
+        assertEquals(person.getName(), hashMap.get(1).getName());
     }
 
     @Test
     void testUpdate(){
-        HashMap<Integer, String> hashMap = new HashMap<>();
-        hashMap.put(1, "tr trt");
+        Person person = new Person();
+        person.setAge(24);
+        person.setName("Anzor");
+        HashMap<Integer, Person> hashMap = new HashMap<>();
+        hashMap.put(4, person);
 
         StringDB stringDB = new StringDB(hashMap);
-        stringDB.update(1, "hello");
-        HashMap<Integer, String> all = stringDB.getAll();
+        stringDB.update(4, person);
+        HashMap<Integer, Person> all = stringDB.getAll();
 
         assertEquals(1, all.size());
-        assertEquals("hello", all.get(1));
+        assertEquals(person.getAge(), all.get(1).getAge());
+        assertEquals(person.getName(), all.get(1).getName());
     }
 
     @Test
     void testDelete(){
-        HashMap<Integer, String> hashMap = new HashMap<>();
-        hashMap.put(1, "brhj vnejr vren");
+        Person person = new Person();
+        person.setAge(22);
+        person.setName("Nurbakyt");
+        HashMap<Integer, Person> hashMap = new HashMap<>();
+        hashMap.put(1, person);
 
         StringDB stringDB = new StringDB(hashMap);
         stringDB.delete(1);
 
-        HashMap<Integer, String> all = stringDB.getAll();
+        HashMap<Integer, Person> all = stringDB.getAll();
         assertTrue(stringDB.getAll().isEmpty());
 
     }
 
     @Test
     void testGet(){
-        HashMap<Integer, String> hashMap = new HashMap<>();
-        hashMap.put(1, "hello");
-        StringDB stringDB = new StringDB(hashMap);
+        //given
+        Person person = new Person();
+        person.setAge(30);
+        person.setName("Anzor");
 
-        String s = stringDB.get(1);
-        assertEquals("hello", s);
+        HashMap<Integer, Person> hashMap = new HashMap<>();
+        hashMap.put(1, person);
+
+        StringDB stringDB = new StringDB(hashMap);
+        HashMap<Integer, Person> all = stringDB.getAll();
+
+        assertEquals(person, all.get(1));
     }
 }

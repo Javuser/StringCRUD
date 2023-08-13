@@ -1,6 +1,11 @@
 package org.example;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class Validator {
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
     public void validate(String s){
         String[] str = s.split(" ");
         switch (str[0]){
@@ -31,26 +36,32 @@ public class Validator {
         if (!str[0].equals("CREATE")) {
             throw new IllegalArgumentException("Illegal command");
         }
-        if (str.length < 2) {
-            throw new IllegalArgumentException("Illegal command");
+        String toReplace = String.format("%s ", str[0]);
+        String value = s.replace(toReplace, "");
+        try{
+            objectMapper.readValue(value, Person.class);
+        } catch (JsonProcessingException e) {
+            throw new IllegalArgumentException("Invalid Person json");
         }
     }
 
-    // UPDATE 34 New String Value
     private void validateUpdate(String s){
         String[] str = s.split(" ");
         if(!str[0].equals("UPDATE")){
             throw new IllegalArgumentException("Illegal command");
         }
-        if(str.length < 3){
-            throw new IllegalArgumentException("Illegal command");
-        }
         if(isNotInt(str[1])){
             throw new IllegalArgumentException("Illegal command");
         }
+        String toReplace = String.format("%s %s ", str[0], str[1]);
+        String value = s.replace(toReplace, "");
+        try{
+            objectMapper.readValue(value, Person.class);
+        } catch (JsonProcessingException e) {
+            throw new IllegalArgumentException("Invalid Person json");
+        }
     }
 
-    //DELETE ID
     private void validateDelete(String s){
         String[] str = s.split(" ");
         if(!str[0].equals("DELETE")){

@@ -1,44 +1,34 @@
 package org.example;
-
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class StringDB {
-    private final Map<Integer, String> hashMap;
-    private AtomicInteger id;
+    private final Map<Integer, Person> hashMap;
+    private final AtomicInteger id;
 
-    public StringDB(Map<Integer, String> hashMap) {
+    public StringDB(Map<Integer, Person> hashMap) {
         this.hashMap = new HashMap<>(hashMap);
-        //todo вычислить айди
-
-//        Integer maxId = hashMap.keySet()
         Integer maxId = hashMap.keySet().stream().max(Integer::compareTo).orElse(0);
-        id = new AtomicInteger(maxId);
+        this.id = new AtomicInteger(maxId);
     }
 
-
-    public StringDB() {
-        this.hashMap = new HashMap<>();
-    }
-
-    public Integer add(String s){
+    public Integer add(Person person){
         id.incrementAndGet();
-        hashMap.put(id.get(), s);
+        hashMap.put(id.get(), person);
         return id.get();
     }
 
-    public String get(Integer id){
+    public Person get(Integer id){
         return hashMap.get(id);
     }
 
-    public HashMap<Integer, String> getAll(){
+    public HashMap<Integer, Person> getAll(){
         return new HashMap<>(hashMap);
     }
 
-    public void update(Integer id, String s){
-        hashMap.replace(id, s);
+    public void update(Integer id, Person person){
+        hashMap.replace(id, person);
     }
 
     public void delete(Integer id){
