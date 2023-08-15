@@ -8,11 +8,11 @@ import java.util.Map;
 import java.util.Properties;
 
 public class Loader {
-    String path = "/Users/nurbakyt/Downloads/StringCRUD/src/main/java/person.properties";
-    File file = new File(path);
+    private final String path = "/Users/nurbakyt/Downloads/StringCRUD/src/main/java/person.properties";
+    private final File file = new File(path);
 
 
-    ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public void saveToFile(Map<Integer, Person> map) {
         try (FileOutputStream outputStream = new FileOutputStream(new File(path))) {

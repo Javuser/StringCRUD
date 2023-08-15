@@ -41,11 +41,8 @@ public class Parser {
         if(str.length == 1){
             return new Command(CommandType.GET_ALL);
         }else {
-            CommandType commandType = CommandType.GET;
             Integer id = Integer.parseInt(str[1]);
-            Person person  = null;
-
-            return new Command(commandType, id, person);
+            return new Command(CommandType.GET, id);
         }
     }
 

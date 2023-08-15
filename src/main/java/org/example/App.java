@@ -2,12 +2,9 @@ package org.example;
 
 import java.util.Scanner;
 
-/**
- * Hello world!
- */
 public class App {
     public static void main(String[] args) {
-        String s;
+        String line;
         Loader loader = new Loader();
         Scanner sc = new Scanner(System.in);
         Validator validator = new Validator();
@@ -18,12 +15,12 @@ public class App {
         Parser parser = new Parser(validator);
         while (true) {
             try {
-                s = sc.nextLine();//CREATE { "name" : "Nurbakyt", "age" : 22}
-                if (s.equals("QUIT")) {
+                line = sc.nextLine();
+                if (line.equals("QUIT")) {
                     loader.saveToFile(service.getHashMap());
                     break;
                 }
-                Command command = parser.parse(s);
+                Command command = parser.parse(line );
                 service.execute(command);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
