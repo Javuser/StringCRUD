@@ -1,16 +1,18 @@
 package org.example;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class Parser {
 
     private final Validator validator;
-
+    private final ObjectMapper objectMapper = new ObjectMapper();
     public Parser(Validator validator) {
         this.validator = validator;
     }
 
-
-    public Command parse(String s){
+    public Command parse(String s) throws JsonProcessingException {
 
         validator.validate(s);
         String[] str = s.split(" ");
@@ -34,45 +36,35 @@ public class Parser {
         return null;
     }
 
-    //GET 4
-    //commandType - GET
-    //id - 4
     private Command parseGet(String s){
-
         String[] str = s.split(" ");
         if(str.length == 1){
             return new Command(CommandType.GET_ALL);
         }else {
-            CommandType commandType = CommandType.GET;
             Integer id = Integer.parseInt(str[1]);
-            String value = null;
-
-            return new Command(commandType, id, value);
+            return new Command(CommandType.GET, id);
         }
     }
 
-    //CREATE rrr ttt yy
-    private Command parseCreate(String s){
+    private Command parseCreate(String s) throws JsonProcessingException {
         String[] str = s.split(" ");
         String toReplace = String.format("%s ", str[0]);
         CommandType commandType = CommandType.CREATE;
         String value = s.replace(toReplace, "");
-        return new Command(commandType, value);
+        Person person = objectMapper.readValue(value, Person.class);
+        return new Command(commandType, person);
     }
-    // update 1 rrr ttt yyy
-    // commandType - update
-    // id - 1
-    // value - rrr ttt yyy
-    private Command parseUpdate(String s){
+
+    private Command parseUpdate(String s) throws JsonProcessingException {
         String[] str = s.split(" ");
         String toReplace = String.format("%s %s ", str[0], str[1]);
         CommandType commandType = CommandType.UPDATE;
         Integer id = Integer.parseInt(str[1]);
         String value = s.replace(toReplace, "");
-
-        return new Command(commandType, id, value);
+        Person person = objectMapper.readValue(value, Person.class);
+        return new Command(commandType, id, person);
     }
-    //DELETE 1
+
     private Command parseDelete(String s){
         String[] str = s.split(" ");
         CommandType commandType = CommandType.DELETE;

@@ -1,8 +1,10 @@
 package org.example;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class ParserTest {
     private final Validator validator = new Validator();
@@ -10,47 +12,50 @@ public class ParserTest {
 
 
     @Test
-    void parseUpdateTest(){
+    void parseUpdateTest() throws JsonProcessingException {
 
-        String command = "UPDATE 1 rr rtt";
+        String command = "UPDATE 1 { \"name\" : \"Nurbakyt\", \"age\" : 22}";
         Command result = parser.parse(command);
 
         assertEquals(CommandType.UPDATE, result.getCommandType());
+        Person person = result.getPerson();
+
         assertEquals(1, result.getId());
-        assertEquals("rr rtt", result.getValue());
-
+        assertEquals("Nurbakyt", person.getName());
+        assertEquals(22, person.getAge());
     }
 
 
     @Test
-    void parseCreateTest(){
-        String command = "CREATE rrr tt yyy";
-        Command result2 = parser.parse(command);
+    void parseCreateTest() throws JsonProcessingException {
+        String command = "CREATE { \"name\" : \"Nurbakyt\", \"age\" : 22}";
+        Command result = parser.parse(command);
 
-        assertEquals(CommandType.CREATE, result2.getCommandType());
-        assertEquals(null, result2.getId());
-        assertEquals("rrr tt yyy", result2.getValue());
-
+        Person person = result.getPerson();
+        assertEquals(CommandType.CREATE, result.getCommandType());
+        assertNull(result.getId());
+        assertEquals("Nurbakyt", person.getName());
+        assertEquals(22, person.getAge());
     }
 
     @Test
-    void parseDeleteTest(){
+    void parseDeleteTest() throws JsonProcessingException {
         String command = "DELETE 1";
-        Command result3 = parser.parse(command);
+        Command result = parser.parse(command);
 
-        assertEquals(CommandType.DELETE, result3.getCommandType());
-        assertEquals(1, result3.getId());
-        assertEquals(null, result3.getValue());
+        assertEquals(CommandType.DELETE, result.getCommandType());
+        assertEquals(1, result.getId());
+        assertNull(result.getPerson());
     }
 
     @Test
-    void parseGetTest(){
+    void parseGetTest() throws JsonProcessingException {
         String command = "GET 1";
         Command result = parser.parse(command);
 
         assertEquals(CommandType.GET, result.getCommandType());
         assertEquals(1, result.getId());
-        assertEquals(null, result.getValue());
+        assertNull(result.getPerson());
 
     }
 }

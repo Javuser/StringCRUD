@@ -1,7 +1,6 @@
 package org.example;
 
 import java.util.HashMap;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class Service {
 
@@ -22,26 +21,30 @@ public class Service {
 
     }
 
-    public HashMap<Integer, String> getHashMap(){
+    public HashMap<Integer, Person> getHashMap(){
         return stringDB.getAll();
     }
+
     private void get(Command command){
-        String s = stringDB.get(command.getId());
-        System.out.println(s);
+        Person person = stringDB.get(command.getId());
+        System.out.println(person);
     }
 
     private void add(Command command){
-        Integer id = stringDB.add(command.getValue());
+        Integer id = stringDB.add(command.getPerson());
         System.out.println("saved to hashmap with id = " + id);
     }
+
     private void update(Command command){
-        stringDB.update(command.getId(), command.getValue());
+        stringDB.update(command.getId(), command.getPerson());
         System.out.println("updated in hashmap with id = " + command.getId());
     }
+
     private void delete(Command command){
         stringDB.delete(command.getId());
         System.out.println("deleted from hashmap with id = " + command.getId());
     }
+
     private void getAll(){
         getHashMap().forEach((key, value) -> System.out.println(String.format("%s: %s", key, value)));
     }

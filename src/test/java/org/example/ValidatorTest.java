@@ -9,34 +9,34 @@ public class ValidatorTest {
 
     @Test
     void validateUpdate(){
-        String command = "UPDATE 1 rrt rt";
+        String command = "UPDATE 1 { \"name\" : \"Nurbakyt\", \"age\" : 22}";
         assertDoesNotThrow(() -> validator.validate(command));
     }
 
     @Test
     void validateShouldThrowException(){
-        String command = "UPDATE ret";
+        String command = "UPDATE 1 \"name\" : \"Nurbakyt\", \"age\" : 22}";
         Exception ex = assertThrows(
                 IllegalArgumentException.class,
                 () -> validator.validate(command)
         );
 
-        assertEquals("Illegal command", ex.getMessage());
+        assertEquals("Invalid Person json", ex.getMessage());
     }
 
     @Test
     void validateCreate(){
-        String command = "CREATE srtrt trt";
+        String command = "CREATE { \"name\" : \"Nurbakyt\", \"age\" : 22}";
         assertDoesNotThrow(() -> validator.validate(command));
     }
 
     @Test
     void validateCreateShouldThrowException(){
-        String command = "CREATE";
+        String command = "CREATE { \"name\" : \"Nurbakyt\" \"age\" : 22}";
         Exception ex = assertThrows(
                 IllegalArgumentException.class, () -> validator.validate(command)
         );
-        assertEquals("Illegal command", ex.getMessage());
+        assertEquals("Invalid Person json", ex.getMessage());
     }
 
     @Test

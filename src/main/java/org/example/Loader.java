@@ -1,22 +1,24 @@
 package org.example;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
 public class Loader {
-    String path = "/Users/nurbakyt/Downloads/StringCRUD/src/main/java/map.properties";
-    File file = new File(path);
+    private final String path = "/Users/nurbakyt/Downloads/StringCRUD/src/main/java/person.properties";
+    private final File file = new File(path);
 
 
-    public void saveToFile(Map<Integer, String> map) {
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
+    public void saveToFile(Map<Integer, Person> map) {
         try (FileOutputStream outputStream = new FileOutputStream(new File(path))) {
-            //Map<String, String> stringMap = new HashMap<>();
             Properties properties = new Properties();
-
-            for (Map.Entry<Integer, String> entry : map.entrySet()) {
-                properties.put(entry.getKey().toString(), entry.getValue());
+            for (Map.Entry<Integer, Person> entry : map.entrySet()) {
+                properties.put(entry.getKey().toString(), objectMapper.writeValueAsString(entry.getValue()));
             }
             properties.store(outputStream, null);
         }catch (Exception e){
@@ -25,16 +27,17 @@ public class Loader {
     }
 
 
-    public Map<Integer, String> loadFromFile() {
+    public Map<Integer, Person> loadFromFile() {
         try(FileInputStream inputStream = new FileInputStream(new File(path))) {
-            Map<Integer, String> stringMap = new HashMap<>();
+            Map<Integer, Person> map = new HashMap<>();
 
             Properties properties = new Properties();
             properties.load(inputStream);
             for (String key : properties.stringPropertyNames()) {
-                stringMap.put(Integer.parseInt(key), properties.get(key).toString());
+                map.put(Integer.parseInt(key), objectMapper.readValue(properties.get(key).toString(),
+                                Person.class));
             }
-            return stringMap;
+            return map;
         }catch (Exception e){
             throw new RuntimeException("Error " + e.getMessage()) ;
         }

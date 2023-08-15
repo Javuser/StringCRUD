@@ -3,27 +3,27 @@ package org.example;
 public class Command {
     private CommandType commandType;
     private Integer id;
-    private String value;
+    private Person person;
 
-    public Command(CommandType commandType, Integer id, String value) {
+    public Command(CommandType commandType, Integer id, Person person) {
         this.commandType = commandType;
         this.id = id;
-        this.value = value;
+        this.person = person;
     }
-    public Command(CommandType commandType, String value) {
+    public Command(CommandType commandType, Person person) {
         this.commandType = commandType;
         this.id = null;
-        this.value = value;
+        this.person = person;
     }
     public Command(CommandType commandType, Integer id) {
         this.commandType = commandType;
         this.id = id;
-        this.value = null;
+        this.person = null;
     }
     public Command(CommandType commandType) {
         this.commandType = commandType;
         this.id = null;
-        this.value = null;
+        this.person = null;
     }
 
     public CommandType getCommandType() {
@@ -42,12 +42,12 @@ public class Command {
         this.id = id;
     }
 
-    public String getValue() {
-        return value;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setValue(Person person) {
+        this.person = person;
     }
 
     @Override
@@ -55,7 +55,7 @@ public class Command {
         return "Command{" +
                 "commandType=" + commandType +
                 ", id=" + id +
-                ", value='" + value + '\'' +
+                ", person='" + person + '\'' +
                 '}';
     }
 }
