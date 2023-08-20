@@ -1,18 +1,16 @@
 package org.example;
 
-import java.util.HashMap;
-
 public class Service {
 
-    private final StringDB stringDB;
+    private final PersonDAO personDAO;
 
-    public Service(StringDB stringDB) {
-        this.stringDB = stringDB;
+    public Service(PersonDAO personDAO) {
+        this.personDAO = personDAO;
     }
 
-    public void execute(Command command){
+    public void execute(Command command) throws Exception {
         switch (command.getCommandType()) {
-            case GET -> get(command);
+            case GET -> getById(command);
             case CREATE -> add(command);
             case UPDATE -> update(command);
             case DELETE -> delete(command);
@@ -21,31 +19,26 @@ public class Service {
 
     }
 
-    public HashMap<Integer, Person> getHashMap(){
-        return stringDB.getAll();
-    }
-
-    private void get(Command command){
-        Person person = stringDB.get(command.getId());
-        System.out.println(person);
+    private void getById(Command command){
+        System.out.println(personDAO.getPersonById(command.getId()));
     }
 
     private void add(Command command){
-        Integer id = stringDB.add(command.getPerson());
-        System.out.println("saved to hashmap with id = " + id);
+        personDAO.addPerson(command.getPerson());
+        System.out.println("saved to db");
     }
 
     private void update(Command command){
-        stringDB.update(command.getId(), command.getPerson());
-        System.out.println("updated in hashmap with id = " + command.getId());
+        personDAO.update(command.getPerson(), command.getId());
+        System.out.println("updated in db with id = " + command.getId());
     }
 
     private void delete(Command command){
-        stringDB.delete(command.getId());
+        personDAO.deleteById(command.getId());
         System.out.println("deleted from hashmap with id = " + command.getId());
     }
 
-    private void getAll(){
-        getHashMap().forEach((key, value) -> System.out.println(String.format("%s: %s", key, value)));
+    private void getAll() throws Exception {
+        personDAO.getAll().forEach((key, value) -> System.out.printf("%s: %s%n", key, value));
     }
 }

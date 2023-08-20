@@ -55,12 +55,14 @@ public class Parser {
         return new Command(commandType, person);
     }
 
+    //UPDATE 6 {"name" : "Nurbakyt", "age": 22}
     private Command parseUpdate(String s) throws JsonProcessingException {
-        String[] str = s.split(" ");
+        String[] str = s.split(" ");//str[0]
         String toReplace = String.format("%s %s ", str[0], str[1]);
         CommandType commandType = CommandType.UPDATE;
         Integer id = Integer.parseInt(str[1]);
         String value = s.replace(toReplace, "");
+        //{"name" : "Nurbakyt", "age": 22}
         Person person = objectMapper.readValue(value, Person.class);
         return new Command(commandType, id, person);
     }
