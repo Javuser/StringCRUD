@@ -5,27 +5,25 @@ import java.util.Scanner;
 public class App {
     public static void main(String[] args) {
         String line;
-        Loader loader = new Loader();
-        Scanner sc = new Scanner(System.in);
-        Validator validator = new Validator();
-
-        StringDB stringDB = new StringDB(loader.loadFromFile());
-        Service service = new Service(stringDB);
-
-        Parser parser = new Parser(validator);
-        while (true) {
-            try {
-                line = sc.nextLine();
-                if (line.equals("QUIT")) {
-                    loader.saveToFile(service.getHashMap());
-                    break;
+        try ( PersonDAO personDAO = new PersonDAO()){
+            Scanner sc = new Scanner(System.in);
+            Validator validator = new Validator();
+            Service service = new Service(personDAO);
+            Parser parser = new Parser(validator);
+            while (true) {
+                try {
+                    line = sc.nextLine();
+                    if (line.equals("QUIT")) {
+                        break;
+                    }
+                    Command command = parser.parse(line);
+                    service.execute(command);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
                 }
-                Command command = parser.parse(line );
-                service.execute(command);
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
     }
 }
